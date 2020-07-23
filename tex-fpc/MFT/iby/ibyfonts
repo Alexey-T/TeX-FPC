@@ -1,0 +1,13 @@
+# build and install ibyfonts
+rm -f trouble 
+mkfont fibo84
+mkfont fibr84
+mkfont fibr849
+mkfont fibo849
+mkfont fibr848
+mkfont fibo848
+mkpkfont fibr84 magstep0.5
+mkpkfont fibo84 magstep0.5
+mkpkfont fibr84 magstep1
+mkpkfont fibo84 magstep1
+mkpkfont cmr10  magstep0.5

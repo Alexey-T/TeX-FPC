@@ -1,0 +1,17 @@
+# copy .tex and .mf files from the ibygrk package
+IBY=../ibygrk
+
+for f in \
+abary4.mf version4.mf ubary4.mf sampi4.mf obary4.mf koppa4.mf \
+ibyupr4.mf ibypnct4.mf ibylwr4.mf ibylig4.mf ibycus4.mf ibyacc4.mf \
+ibary4.mf hbary4.mf fibr849.mf fibr848.mf fibr84.mf fibo849.mf \
+fibo848.mf fibo84.mf fibb849.mf fibb848.mf fibb84.mf ebary4.mf \
+digamma4.mf cigma4.mf wbary4.mf gen_acc.mf graccent.mf grbase.mf
+do cp -p $IBY/fonts/source/public/ibycus4/$f .
+done
+
+for f in \
+pssetiby.tex tlgsqq.tex setiby4.tex version4.tex ibycusps.tex \
+ibycus4.tex iby4extr.tex psibycus.tex iby4text.tex
+do cp -p $IBY/tex/generic/ibycus4/$f .
+done

@@ -1,0 +1,61 @@
+# This script builds and installs .pk fonts for dvips.tex
+rm -f trouble # clean list of trouble makeing fonts
+mkpkfont logo10 magstep0.5
+mkpkfont cminch magstep0.5
+mkpkfont cmbx10 '2.272*magstep0.5'
+mkpkfont cmbx10 '1.577*magstep0.5'
+mkpkfont cmbx10 '1.315*magstep0.5'
+mkpkfont cmr7 magstep4.5 # for titles
+mkpkfont cmtt10 magstep2.5
+mkpkfont cmssbx10 magstep2.5
+mkpkfont ../lib/manfnt magstep 0.5
+mkpkfont cmr10 magstep0.5 # roman text
+mkpkfont cmr9 magstep0.5
+mkpkfont cmr8 magstep0.5
+mkpkfont cmr7 magstep0.5
+mkpkfont cmr6 magstep0.5
+mkpkfont cmr5 magstep0.5
+mkpkfont cmmi10 magstep0.5 # math italic
+mkpkfont cmmi9 magstep0.5
+mkpkfont cmmi8 magstep0.5
+mkpkfont cmmi7 magstep0.5
+mkpkfont cmmi6 magstep0.5
+mkpkfont cmmi5 magstep0.5
+mkpkfont cmsy10 magstep0.5 # math symbols
+mkpkfont cmsy9 magstep0.5
+mkpkfont cmsy8 magstep0.5
+mkpkfont cmsy7 magstep0.5
+mkpkfont cmsy6 magstep0.5
+mkpkfont cmsy5 magstep0.5
+mkpkfont cmex10 magstep0.5 # math extension
+mkpkfont cmss10 magstep0.5 # sans serif
+mkpkfont cmssq8 magstep0.5
+mkpkfont cmssi10 magstep0.5 # sans serif italic
+mkpkfont cmssqi8 magstep0.5
+mkpkfont cmbx10 magstep0.5 # boldface extended
+mkpkfont cmbx9 magstep0.5
+mkpkfont cmbx8 magstep0.5
+mkpkfont cmbx7 magstep0.5
+mkpkfont cmbx6 magstep0.5
+mkpkfont cmbx5 magstep0.5
+mkpkfont cmtt10 magstep0.5 # typewriter
+mkpkfont cmtt9 magstep0.5
+mkpkfont cmtt8 magstep0.5
+mkpkfont cmsltt10 magstep0.5 # slanted typewriter
+mkpkfont cmsl10 magstep0.5 # slanted roman
+mkpkfont cmsl9 magstep0.5
+mkpkfont cmsl8 magstep0.5
+mkpkfont cmti10 magstep0.5 # text italic
+mkpkfont cmti9 magstep0.5
+mkpkfont cmti8 magstep0.5
+mkpkfont cmti7 magstep0.5
+mkpkfont cmu10 magstep0.5 # unslanted text italic
+mkpkfont cmmib10 magstep0.5 # bold math italic
+mkpkfont cmbsy10 magstep0.5 # bold math symbols
+mkpkfont cmcsc10 magstep0.5 # caps and small caps
+mkpkfont cmssbx10 magstep0.5 # sans serif bold extended
+mkpkfont cmdunh10 magstep0.5 # Dunhill style
+mkfont cmtex10
+mkfont cminch
+mkfont cmssdc10 4
+mkpkfont cmr5 2

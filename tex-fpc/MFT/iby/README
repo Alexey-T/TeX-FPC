@@ -1,0 +1,98 @@
+This directory contains files that help installing an ancient Greek
+font in TeX-GPC. The font includes a full set of diacritical marks,
+the preclassic letters digamma, quoppa and sampi, and the lunatic
+variant of sigma.
+
+The font was originally cut by Firmin Didot(*1764, +1836), put into
+METAFONT files by Silvio Levy in 1987 and improved by Pierre A. MacKay,
+the author of Ibycus4. Here I used version 4.5 as of
+2004-10-27.
+
+Preparation:
+------------
+Get the packages ibygrk and levy from CTAN:fonts/greek and copy
+files from levy and ibygrk directories into this directory, with
+the shellscripts getlevy and getiby.
+
+Link METAFONT's and TeX's master directories to this directory, so
+you can run mf and tex from here. Make sure MFinputs contains
+Knuth's computer modern fonts.
+
+Installation:
+-------------
+Run ibyfonts to build and install the .tfm and .pk fonts.
+Run ibymacros to install macro files into TeXinputs.
+
+Usage:
+------
+From your .tex file \input agr and enclose Greek between \GK and
+\RM.
+
+
+Typing Greek characters
+-----------------------
+You don't need a monster keyboard or even the ALT-key to enter
+Greek text into your TeX---ASCII suffices. The ASCII representation
+used here follows the Beta Code from the Thesaurus Linguae Graecae.
+(http://www.tlg.uci.edu/BetaCode.html)
+
+Greek Letters:
+Since the Latin alphabet emerged from the Greek one, you enter most
+Greek letters as their corresponding ASCII character.
+But there are some exceptions:
+Greek	ASCII
+eta	h
+theta	q
+ksi	c
+ypsilon	u
+phi	f
+chi	x
+psi	y
+omega	w
+digamma v
+koppa   k+
+sampi   s+ (lowercase only)
+lunatic
+sigma	c
+
+Diacritics:
+rough breathing: 	(
+smooth breathing:	)
+diaeresis:		+
+acute:			'
+grave:			`
+circumflex:		=
+iota subscript:		|
+dubious(dot under):	!
+
+Order of diacritics with lowercase letters:
+letter, diaeresis, breathing, accent, iota subscript. E.g. u"(=|
+A diaeresis (+) won't work together with a circumflex.
+
+Order of diacritics with uppercase letters:
+breathing, accent, letter, iota subscript (=W|
+A breathing is mandatory before an accent.
+
+Punctuation
+Period		.
+Apostroph	' (if after a vowel, use a{}', not a')
+Colon		:
+Question Mark	;
+guillemets	<< >>
+
+Look at test.tex and sappho.tex for examples.
+
+Installing the Type 1 fonts in teTeX3.0:
+----------------------------------------
+List the search directory with `kpsewhich -show-path=.pfb'
+I selected ~/texmf from that list. 
+From the ibygrk/fonts directory do:
+        mkdir ~/texmf/fonts
+	cp -rp * ~/texmf/fonts
+	texhash
+
+Finally I added the command line option `-u +iby' to dvips
+in the dvipdf script.
+
+Aug. 2008
+Wolfgang Helbig

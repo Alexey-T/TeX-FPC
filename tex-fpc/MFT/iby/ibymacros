@@ -1,0 +1,6 @@
+# install tex macros for ibycus4 TeX-GPC
+for f in \
+pssetiby.tex tlgsqq.tex setiby4.tex version4.tex ibycusps.tex \
+ibycus4.tex iby4extr.tex psibycus.tex iby4text.tex agr.tex ibycus4.map
+do cp -p $f TeXinputs
+done

@@ -1,0 +1,6 @@
+case $# in
+1) b=`basename $1 .web`; weave $1 /dev/null $b.tex;;
+2) b=`basename $1 .web`; weave $1 $2        $b.tex;;
+*) echo Usage: `basename $0` web-file [ ch-file ]; exit 1
+esac && \
+tex $b

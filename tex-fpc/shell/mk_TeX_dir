@@ -1,0 +1,6 @@
+# Prepare the current directory to run TeX, dvips and xdvi
+ln -s ~/TeXinputs .
+ln -s ~/TeXformats .
+ln -s ~/TeXfonts .
+ln -s ~/PKfonts .
+ln -s ~/DVIPSconf .

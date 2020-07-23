@@ -1,0 +1,3 @@
+# Prepare the current directory to run METAFONT, mkfont and mkpkfont
+ln -s ~/MFbases .
+ln -s ~/MFinputs .

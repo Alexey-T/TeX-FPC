@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+#  Do not run this script, or dvips, as setuid programs!  This will
+#  result in a major security hole!
+#
+#   This script file makes a new TeX PK font, because one wasn't
+#   found.  Parameters are:
+#
+#   name dpi bdpi magnification [mode [subdir]]
+#
+#   `name' is the name of the font, such as `cmr10'.  `dpi' is
+#   the resolution the font is needed at.  `bdpi' is the base
+#   resolution, useful for figuring out the mode to make the font
+#   in.  `magnification' is a string to pass to MF as the
+#   magnification.  `mode', if supplied, is the mode to use.
+#
+mkpkfont $1 $4

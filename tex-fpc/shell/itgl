@@ -1,0 +1,6 @@
+case $# in
+1) b=`basename $1 .web`; tangle $1 /dev/null ini$b.p $b.pool;;
+2) b=`basename $2 .ch`;  tangle $1 $2        ini$b.p $b.pool;;
+*) echo Usage: `basename $0` web-file [ ch-file ] ; exit 1
+esac && \
+fpc ini$b.p

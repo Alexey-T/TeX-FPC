@@ -1,0 +1,4 @@
+# fonts used by mf.web
+mkfont logo10 # font used for the METAFONT logo
+mkfont logosl10
+mkfont logo8

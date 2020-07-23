@@ -1,0 +1,19 @@
+# install pk-file from mf-file for TeX-GPC
+#
+# xdvi expects the path name of the generated .pk file in the first
+# line of stdout, so redirect mf's stdout to stderr.
+f=`basename $1 .mf`
+case $# in
+1) mag=1;;
+2) mag=$2;;
+*) echo Usage: $0 mf-file [ magnification ]; exit 1
+esac
+rm -f $f.*gf
+rm -f $f.*pk
+mf '\mode=localfont; mag='$mag'; batchmode; input' $1 </dev/null >&2 \
+&& pkname=`echo $f.*gf | sed 's/gf$/pk/'` \
+&& gftopk $f.*gf $pkname >&2 \
+&& mv $f.*pk PKfonts/ \
+&& echo PKfonts/$pkname \
+&& rm $f.tfm && rm $f.log && rm $f.*gf \
+|| (echo $0 $1 $mag >>trouble; exit 1)

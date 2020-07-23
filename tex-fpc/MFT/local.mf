@@ -1,0 +1,33 @@
+% This is local.mf for my HP LaserJet 1320.
+% It works with two resolutions.
+% The values are from modes.mf (ftp://tug.org/tex/modes.mf) Version 3.8.
+% as supplied by Niko Sauer <nikos@friedrichs.up.ac.za>.  Niko writes:
+% Here are modes developed for and tested on the HP LaserJet 2100T/TN.
+% Mode ljtozz is for a resolution of 1200dpi, and ljtozzfr for 600dpi
+% Tradeoffs between |fillin| and |blacker| resulted in very clear,
+% sharp renderings of Computer Modern fonts which appears to be
+% preferable to what the modes ljfzzz ljfzzzfr for HP LaserJet 4000
+% yield on this printer. Preferences were tested by scrutiny of the
+% results by sample of people in the vicinity.
+%
+% 
+mode_def lj =                   % HP LaserJet 1320 ProRes (1200 dpi)
+   proofing :=0;
+   fontmaking := 1;
+   tracingtitels := 1;
+   pixels_per_inch := 1200;
+   blacker := .7;
+   fillin := .15;
+   o_correction := 1;
+enddef;
+%
+mode_def ljfr =                 % HP LaserJet 1320 FastRes (600dpi)
+   proofing :=0;
+   fontmaking := 1;
+   tracingtitels := 1;
+   pixels_per_inch := 600;
+   blacker := .25;
+   fillin := .3;
+   o_correction := 1;
+enddef;
+localfont := ljfr;

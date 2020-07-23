@@ -1,0 +1,8 @@
+# copy fonts from the levy directory
+LEVY=../levy
+for f in \
+a.mf b.mf d.mf e.mf f.mf g.mf h.mf i.mf j.mf k.mf \
+l.mf m.mf n.mf o.mf p.mf q.mf r.mf s.mf t.mf u.mf \
+w.mf x.mf y.mf z.mf gen_sigma.mf grpunct.mf grbase.mf graccent.mf
+do cp -p $LEVY/$f .
+done

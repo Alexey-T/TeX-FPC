@@ -1,0 +1,95 @@
+\parindent=0pt
+\overfullrule=0pt
+Hier wird gepr\"uft, ob die Einstellungen von plain \TeX erhalten bleiben.
+\ifnum\language=0\else\errmessage{language nicht 0}\fi
+\ifnum\lefthyphenmin=2\else\errmessage{lefthyphenmin nicht 2}\fi
+\ifnum\righthyphenmin=3\else\errmessage{righthyphenmin nicht 3\fi
+\par und jetzt geht's los:
+\input german.sty
+
+% Das Anf"uhrungszeichen wird schon bei der Definition eines Makros
+% als aktives Zeichen behandelt, nicht erst bei der Expansion.
+\def\qq#1{"`{\tt\char`\" #1}"'}
+
+% Wird hier zwar nicht gebraucht, aber gut zu wissen!
+\def\qq#1{{\tt\char`\" #1}}
+\def\bs#1{{\tt\char`\\ #1}}
+
+\par Die deutschen Trennparameter 
+\par Nummer der deutschen Trennmuster: \the\language
+\par Minimall"ange vor dem Trennstrich: \the\lefthyphenmin
+\par Minimall"ange nach dem Trennstrich: \the\righthyphenmin
+\originalTeX
+\par und die originalen Trennparameter:
+\par Nummer der US-Trennmuster: \the\language
+\par Minimall\"ange vor dem Trennstrich: \the\lefthyphenmin
+\par Minimall\"ange nach dem Trennstrich: \the\righthyphenmin
+\germanTeX
+\par Die Trema \qq o und \bs {\char`\"} sind gleich hoch: sch"on und sch\"on
+\originalTeX
+\par In plain \TeX\ sind die Trema h\"oher.
+\germanTeX
+\par Hier gibt es Unterschiede, bei \bs {\char`\"} sind die Trema tiefer:
+Citro"en und Citro\"en
+\originalTeX
+\par und so siehts in plain \TeX\ aus: Citro\"en.
+\germanTeX
+\par Stra"se Ma"ze,
+STRA"SE MA"ZE
+\par "`Anf"uhrungszeichen"' und \glq halbe Anf"uhrungszeichen\grq
+\vskip 1cm
+Warum wird Stra"se nicht getrennt, Ma"se aber sehr wohl?
+
+\centerline{\vbox {\hsize 1pt Stra"se, Ma"se}}
+
+Weil \TeX\ nicht das erste Wort im Paragraphen trennt!
+
+\centerline{\vbox {\hsize 1pt Ma"se, Stra"se}}
+\vskip 1cm
+\par\qq{ck}, \qq{ll}, \qq{tt}, \qq{ff}: Dru"cker, Ro"lladen, Be"ttuch,
+Schi"ffahrt (\TeX\ denkt hier, "`Dru"' sei ein Wort,
+denn \qq{ck} ist, wie alle Befehle, ein Worttrenner.):
+
+\centerline {\vbox {\hsize 1pt Dru"cker, Ro"lladen, Be"ttuch, Schi"ffahrt}}
+\vskip 1cm
+Auflage ({\tt fl}) und Auf"|lage ({\tt f\qq |l}) werden gleich getrennt:
+
+\centerline{\vbox {\hsize 1pt Auf"|lage, Auflage}}
+\eject
+\bs - deaktiviert alle anderen Trennstellen,  aber nicht so \qq-:
+
+\centerline{\vbox {\hsize 1pt \relax A "ubertragen, "uber\-tragen, "uber"-tragen }}
+\vskip 1cm
+{\tt -} ist eine Trennstelle, aber nicht \qq {\char`~}:
+
+\centerline{\vbox {\hsize 1pt A bergauf und -ab, bergauf und "~ab}}
+\vskip 0,5cm
+\centerline{\vbox {\hsize 1pt I-Punkt, I"~Punkt}}
+\vskip 1cm
+{\tt -} deaktiviert alle anderen Trennstellen, aber nicht so \qq=:
+
+\centerline{\vbox {\hsize 1pt A Arbeiter-Unfallgesetz, Arbeiter"=Unfallgesetz}}
+\eject
+\bs- verhindert falsche Trennungen, die \qq- erm"oglicht:
+
+\centerline{\vbox {\hsize 1pt A Bedienoberfl"ache, Bedien"-oberfl"ache,
+                   Be\-dien"-oberfl"ache}}
+\vskip 1cm
+\qq{\char`\"} unterdr"uckt den Trennstrich: (Wer braucht das?)
+
+\centerline{\vbox {\hsize 1pt Wolf""gang}}
+\vskip 1cm
+Was ist sch"oner: "`Wolfgang"' oder "`\negthinspace Wolfgang"',
+{ \it"`Hof"'\/} oder {\it "`Hof\/"'\/}, "`Hof"' oder "`Hof\/"'?
+\eject
+Die originalen Trennmuster:
+\selectlanguage{USenglish}
+
+\centerline{\vbox {\hsize 1pt A Arbeiterunfallversicherung awsome astonished}}
+\vskip 1cm
+
+Und die deutschen nach bew"ahrter Rechtschreibung:
+\selectlanguage{german}
+
+\centerline{\vbox {\hsize 1pt A Arbeiterunfallversicherung awsome astonished}}
+\end

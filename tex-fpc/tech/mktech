@@ -1,0 +1,17 @@
+# Schritt 1: Formatdatei bauen.
+# Hierzu muss die Konstante TRIESIZE vergroessert werden.
+# 16844 ist schon zu klein, obwohl TeX behauptet, er braucht weniger
+# als 14000 (im log-file).
+sed /TRIESIZE=8000/s//TRIESIZE=16845/ ../tex/initex.p >initech.p
+fpc initech.p
+initech 'schlicht \dump'
+# Schritt 2: Den Namen der Formatdatei und die TRIESIZE anpassen.
+# Wenn die TRIESIZE hier nicht angepasst wird, kann er die Formatdatei
+# nicht laden.
+# Die Laenge des Namens muss mit der Laenge von 'plain' uebereinstimmen,
+# daher die haessliche Abkuerzung.
+mv schlicht.fmt TeXformats/schli.fmt
+sed -e /plain.fmt/s//schli.fmt/\
+    -e /TRIESIZE=8000/s//TRIESIZE=16845/\
+    ../tex/tex.p >tech.p
+fpc tech.p

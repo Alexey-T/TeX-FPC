@@ -1,0 +1,7 @@
+mkfont cmtex10
+mkfont cminch
+mkfont cmssdc10 4
+mkpkfont cmr5 2
+mkfont cmman  # font used for miscellaneous Computer Modern variations
+		     # from ctan:/systems/knuth/local/mf/cmman.mf
+mkfont random # from ctan:/systems/knuth/local/lib/random.mf

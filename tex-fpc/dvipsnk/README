@@ -1,0 +1,33 @@
+Feb 2019
+The files in this directory help to build Tom Rockiki's dvips for TeX-FPC.
+
+Since KPSE does not blend with TeX-FPC, and CTAN only offers KPSE based
+versions of DVIPS, I downloaded the latest release from Stanford:
+     ftp ftp://ftp.cs.stanford.edu/pub/dvips/dvips576.tar.gz
+
+It unpacks in a directory dvips576. Edit Makefile from this directory
+to reflect the default resolution of your printer, the location
+of your binary and "man" directory.
+
+Copy the files afm2tfm.c, Makefile and MakeTeXPK to divps576/dvips/.
+
+See xdvi/README for hints on the man directory.
+
+Create a master directory DVIPSconf if you haven't done so already, goto
+dvips576/dvips, run mk_TeX_dir, mk_MF_dir, and make install.
+
+Edit DVIPSconf/config.ps to reflect paper size and resolution of
+your printer.  To make dvips generate missing .pk fonts automatically,
+the resolutions in config.ps and in the mf mode "localfont" must
+agree.
+
+Hint: With an A4 papersize you might want to adjust the origin
+to 1in-3mm,1in+8.8m. This line in config.ps does that:
+O -3mm,8.8mm
+
+This will give you equal left and right margins with Plain TeX's
+predefined \hsize of 6.5in, and therefore the pagenumbers will line up
+nicely on two sided output.
+
+Enjoy,
+Wolfgang

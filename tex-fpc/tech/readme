@@ -1,0 +1,30 @@
+$\pi$-Tag 2010 
+TeCH: TeX mit deutschen Trennmustern
+Die hier vorgeschlagene Konfiguration der Trennmuster ist kompatibel
+zu anderen Distributionen.  Sie enth"alt US-Englisch und Deutsch
+(nach der bew"ahrten Rechtschreibung).  Voreingestellt ist US-Englisch.
+
+Installation:
+Die deutschen Trennmuster holen:
+ftp ftp://ftp.dante.de/pub/tex/macros/ec-plain/ghyph31.tex
+Und tech bauen:
+$ mktech
+Dies erzeugt das Programm tech. Am besten ins bin-Verzeichnis damit.
+
+Das Macropaket german.sty holen:
+ftp ftp://ftp.dante.de/pub/tex/language/german/german.sty
+
+Diese Datei mit dem Datum vom 13.04.199 enth"alt einen Fehler,
+das \grq verschwindet. Mit
+ed <german.ed german.sty
+kann man diesen Fehler korrigieren.
+
+Um die Installation zu testen, tech test aufrufen.
+Die Datei test.tex fa"st die Hinweise aus gerdoc, dem Handbuch f"ur
+german.sty, zusammen.
+Die Datei german.sty ins Verzeichnis TeXinputs stellen.
+
+Nach dem Laden des Pakets german.sty ist deutsch voreingestellt.
+
+\originalTeX zum Zur"uckschalten auf plain.tex
+"FF als Zahl sollte "0FF geschrieben werden.

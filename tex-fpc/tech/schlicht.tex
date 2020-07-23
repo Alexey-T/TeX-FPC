@@ -1,0 +1,14 @@
+%% hier kommen die deutschen Trenntabellen rein.
+\input ../lib/plain.tex
+\catcode`@=11 % at signs are letters again
+\chardef\l@USenglish=\language
+\chardef\l@english=\language
+\newlanguage\l@german \language=\l@german
+\chardef\l@austrian=\language
+\chardef\l@french=\language
+\input ghyph31
+\message{erledigt.}
+%% auf USEnglisch voreinstellen
+\language=\l@USenglish
+\catcode`@=12 % at signs are no longer letters again
+\def\fmtname{schlicht}\def\fmtversion{3.141592653} %

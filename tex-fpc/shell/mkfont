@@ -1,0 +1,15 @@
+# Install .tfm and . pk files from .mf files for TeX-GPC
+f=`basename $1 .mf`
+case $# in
+1) mag=1;;
+2) mag=$2;;
+*) echo Usage: $0 mf-file [ magnification ]; exit 1
+esac
+echo $0: $f magnification=$mag
+rm -f $f.*gf
+mf "\\mode=localfont; mag=$mag; batchmode; input $1"\
+&& gftopk $f.*gf `echo $f.*gf | sed 's/gf$/pk/'` \
+&& mv $f.*pk PKfonts/ \
+&& mv $f.tfm TeXfonts/ \
+&& rm $f.log && rm $f.*gf \
+|| echo $0 $1 $mag >>trouble
