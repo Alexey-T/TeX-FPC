@@ -1,35 +1,56 @@
-2019-03-04
+TeX-FPC 4th ed.                                                    2021-04-08
 
 This directory contains change files for Donald E. Knuth's suite
-of TeX related programs. The change files (.ch) and Don Knuth's
-WEB files (.web) from January 2014 are the key components of a
-construction kit for "TeX-FPC"---a TeX system which is based on
-the Free Pascal Compiler (FPC) and runs in a Unix environment.  It's
-by magnitudes smaller than other TeX distributions.
+of TeX related programs. The change files (.ch) and Don Knuth's WEB
+files (.web) from January 2021 are the key components of a construction
+kit for "TeX-FPC"---a complete TeX system based purely on the Free Pascal
+Compiler (FPC), and running in any Unix environment.
 
 These building bricks are glued together by shell scripts in
 the---guess where---shell subdirectory.
 
-The MFT directory contains shell scripts for installing fonts
-(xxxfonts), and the directory iby shows how to install fonts
-with TeX-FPC. In this case a polytonic Greek font, suited for ancient
-Greek texts.
+The file tex-fpc.pdf shows how and why TeX-FPC differs from the original.
+It was produced by two command lines:
+   $ wve tex.web tex.ch
+   $ dvipdf tex.dvi
 
-The directories dvipsnk and xdvi show how to install Tom Rokicki's
-dvips and Paul Vojta's xdvi.
-If your printer does not accept postscript, you might want to install
-ghostscript, which converts postscript to the language of you printer or
-to pdf. Use ghostscripts dvipdf to convert ps to pdf.
+The MFT directory contains shell scripts to create fonts (xxxfonts).
+Its subdirectory iby shows how to add a font to TeX-FPC. In this
+case a polytonic Greek font, suited for ancient Greek texts.
 
-TeX-FPC replaces the famous and beautiful TeX-GPC. The GNU Pascal Compiler
-is not supported on Linux, the BSDs and OS X. Free Pascal is chosen
-not because it is the best alternative but because it is the only
-alternative.
-In FPC 3.0.4 I spotted to errors: See
-0035136: The function EOF does not comply to ISO Pascal
-0035066: fpc says "cannot determine which overloaded function to call"
-at bugs.freepascal.org
+The directories dvips and xdvi help to get, compile and install Tom
+Rokicki's dvips and Paul Vojta's xdvi.
 
+Likewise the directory mp for John Hobby's METAPOST.
+
+The directory tech demonstrates how to build a TeX system that
+supports the german language.
+
+The directory twebmac explains and fixes bugs of WEB macros.
+
+And the ch.ch directory contains change files for change files.
+
+Requirements:
+============
+TeX-FPC is liberal in what it accepts:
+You will succeed with any flavor of the Unix operating system.
+In fact, I only used stuff from:
+   Kernighan, Pike: The Unix programming environment (1984) 
+I have to admit, now and then I used vi instead of ed, the Unix Standard
+Editor.
+If TeX-FPC doesn't work on your system, it is not Unix, not even remotely so.
+
+Any version of FPC from 3.0.0 (Nov. 2015) to 3.2.0 (June 2020)
+works fine.
+
+To build the DVI-driver xdvi and dvips a C-compiler is necessary.
+To run xdvi, you need X-Window and to print your books, you either
+need a postscript printer or you use ghostscript to translate
+postscript to your printers language. The DVI-drivers are written in C.
+
+Everything you need existed in the mid eighties of the last century.
+All the great books produced with TeX demonstrates how much can be
+done without the latest "innovations".
 
 Overview:
 =========
@@ -39,7 +60,7 @@ File formats and their documentation:
 WEB files:
 .web	WEB programs, "The WEB System of Structured Documentation" (webman.tex)
 .ch	Change files for WEB programs (patches to be applied to .web files)
-.p	Free Pascal source
+.p	Pascal source
 .pool   String pool, contains the string constants of a WEB program.
 
 
@@ -57,72 +78,95 @@ METAFONT files:
 TeX files:
 .tex	TeX source, "The TeXbook" (texbook.tex)
 .fmt    Format file, a compact representation of TeX's memory.
-        contains the string pool (tex.pool) and preloaded .tfm files.
+        contains the string pool (tex.pool) and fifty .tfm files.
 .dvi	device independent file, "TeX: The Program" (tex.web), part 31
 .log    a log file
 
+Dependencies of files:
+File		depends on
+----		----------
+xxx		xxx.p
+xxx.p		xxx.web, xxx.ch
+tex.pool	strings in tex.web or tex.ch
+plain.fmt	plain.tex
+		.tfm files (cf. plain.log)
+		hyphen.tex
+		tex.pool
+mf.pool		strings in mf.web or mf.ch
+plain.base	plain.mf
+		local.mf
+		mf.pool
 
+Dependencies of programs
+Program		depends on
+-------		----------
+initex		TeXformats/tex.pool
+tex		TeXformats/plain.fmt
+inimf		MFbases/mf.pool
+mf		MFbases/plain.base
 
 Files and their processors:
 --------------------------
 WEB:
-		   tangle
-       .web, .ch --------> .p, .pool
+		  tangle
+     x.web, x.ch --------> x.p, x.pool
 
-                   fpc
-             x.p  --------> x
-
+                  fpc
+             x.p  --------> x (to compile tex and mf you need some units:
+                               fpc -FaUnix,sysutils,baseunix)
                    tgl
-       x.web, x.ch --------> x (linking the last two steps)
+      x.web, x.ch --------> x (combines the last two steps, no pool)
 
                    itgl
-      x.web, x.ch --------> x,  inix.p, .pool (links the first two steps
-                                                  and keeps the pascal sources)
+      x.web, x.ch --------> inix.p, inix, x.pool (like tgl, but with pool)
 
 		   weave
-       .web, .ch --------> .tex (Description of the program)
+        .web, .ch --------> .tex (description of the program)
 
-		   wve
-       .web, .ch --------> .dvi (linking the above step and tex)
+		  wve
+        .web, .ch --------> .dvi (linking the above step and tex)
 
 
-METAFONT:
-		   inimf
-	plain.mf --------> plain.base
+METAFONT and TeX metric fonts:
+                              inimf
+  mf.pool, local.mf plain.mf --------> plain.base
 
-                    mf
-	     .mf --------> .nnngf, tfm
+                              mf
+             plain.base, .mf --------> .tfm
 
-                  gftopk
-          .nnngf --------> .nnnpk
-
-                  mkfont
-             .mf --------> TeXfonts/.tfm, PKfonts/.nnnpk
-
-                 mkpkfont
-             .mf --------> PKfonts/.nnnpk
-
+                              mkfont
+                         .mf --------> TeXfonts/.tfm
 
 TeX:
-		   initex
- .tfm, plain.tex --------> plain.fmt
+		                         initex
+ tex.pool, hyphen.tex, plain.tex, .tfm  --------> plain.fmt
 
-                    tex
-  [ .tfm ], .tex --------> .dvi
+                                         tex
+                  plain.fmt, .tfm, .tex --------> .dvi
 
+DVI drivers and bitmap fonts:
+   			mf 
+    plain.base, .mf --------> .nnngf
+  		     gftopk
+             .nnngf --------> .nnnpk
 
-DVI drivers:
-                   dvips
-    .dvi, .nnnpk --------> .ps, PostScript printer
+                     MKTeXPK
+                 .mf --------> PKfonts/.nnnpk (combining the above steps)
 
-                   xdvi
-    .dvi, .nnnpk --------> X-Window
+ 
+                     dvips
+ .tfm, .nnnpk, .dvi --------> .ps, PostScript printer
+
+                     xdvi
+ .tfm, .nnnpk, .dvi --------> X-Window
+
+The dvi-drivers dvips and xdvi will call MKTeXPK to install .nnnpk
+on demand.
 
 
 File names:
 -----------
-TeX-FPC searches files in directories which are local to the working
-directory:
+TeX-FPC searches files in subdirectories of the working directory:
 	TeXinputs  .tex
 	TeXfonts   .tfm
 	TeXformats .pool, .fmt
@@ -131,34 +175,38 @@ directory:
 	PKfonts    .nnnpk
 	DVIPSconf  .pro, .ps, .map (Header and configuration files for dvips)
 
-I created one set of "master directories" and used symbolic links
-to my working directory like:
+To run tex or initex the working directory must contain the first
+three directories from the list above. Likewise for mf or inimf and
+the last four directories from the list. The dvi driver xdvi and
+dvips will invoke mf to create PK fonts whenever needed. So you
+might need to install the mf-directories when printing.
+
+To avoid copying the directories to each directory where you want
+to run TeX, create one set of "master directories" and use symbolic
+links to your working directory like:
 
 	ln -s ~/TeXformats .
 
-The scripts mk_TeX_dir and mk_MF_dir help to prepare a directory
-for running TeX resp. METAFONT.  Adapt these scripts to the locations
-of your master directories.
+The scripts mk_TeX_dir and mk_MF_dir help do just this automatically.
+Adapt these scripts to the locations of your master directories.
 
 TeX-FPC's path searching applies to file names without directory
 components, i.e. without a /:
-	.tex   local directory and then TeXinputs 
-	.mf    local directory and then MFinputs
-	.tfm   TeXfonts
+	.tex	    working directory and then TeXinputs 
+	.mf         working directory and then MFinputs
+	.tfm        working directory and the TeXfonts
+        .fmt        working directory and then TeXformats
+         plain.fmt  hard coded (!) TeXformats/plain.fmt
+        .base       working directory and then MFbases
+         plain.base hard coded (!) MFbases/plain.base
+        .pool       hard coded (!) in TeXformats, MFbases 
 
-Depending on the context, TeX-FPC programs append ".mf", ".tex",
-or ".tfm" to file names without extensions.
-
-builtin file names:
-------------------
-TeXformats/tex.pool	string pool for tex, (in initex)
-MFbases/mf.pool		string pool for mf, (in inimf)
-TeXformats/plain.fmt 	format file for Plain TeX, (in tex)
-MFbases/plain.base  	base file for Plain METAFONT, (in mf)
+Depending on the context, TeX-FPC programs append ".mf", ".tex", ".fmt",
+".base" or ".tfm" to file names without extensions.
 
 Fonts in TeX-FPC:
 ----------------
-For each font TeX needs one .tfm file. For each font and
+For each font, TeX needs one .tfm file. For each font and
 resolution/magnification the DVI drivers need one .nnnpk file.
 The script mkfont will install both a .tfm and an .nnnpk file, the
 script mkpkfont will install an .nnnpk file only.  You specify the
@@ -170,9 +218,9 @@ Running TeX-FPC
 ===============
 Missing files
 -------------
-Search missing macro files like (webmac.tex) in Knuth's lib
+Search missing macro files like webmac.tex in Knuth's lib
 directory and copy them to the working directory or to TeXinputs.
-My change files import webmac-fpc.tex; move it to TeXinputs.
+The .ch files import webmac-fpc.tex; move it to TeXinputs.
 
 Search the sources of missing fonts in the lib directory (.mf),
 copy them to MFinputs and use the scripts mkfont  or mkpkfont to
@@ -185,132 +233,146 @@ command line
 creates a list of the font names used by plain.tex. I edited
 plainfonts to convert it to a shell script that creates all fonts
 of the plain format. In the MFT directory you'll find other examples.
+If the generation of a font failed, the failing command is written
+to the file trouble in the working directory. You might want to fix
+the error and rerun the file trouble, (sh trouble). If the error
+persists though, you might end up in a loop.
 
 Installing new fonts from CTAN
 ------------------------------
 The directory MFT/iby contains instructions on how to install a font
 from CTAN, in this case ibygrk to typeset polytonic ancient Greek.
 
-Printing the documentation
---------------------------
+Printing the web-programs
+-------------------------
 The weave program generates an xxx.tex file from an xxx.web file
-and a possibly empty change file. Use tex to generate an xxx.dvi
-file. This is done by the script wve. For example, to view the
-description of TeX-FPC, use
+and a xxx.ch file. Use tex to generate an xxx.dvi file. This is
+done by the script wve. For example, to view the description of
+TeX-FPC, use
 	wve tex.web tex.ch && xdvi tex
-The web-macros need another font. Use webfonts to install it.
-The scripts texwebfonts installs additional fonts for  tex.tex, 
-and mfwebfonts for mf.tex.
+The web-macros need another font. Run MFT/webfonts to install it.
+And run MFT/mfwebfonts for mf.tex.
+The file tex-fpc.pdf provides the doc independent of an installed
+TeX system. It describes how I adopted TeX to FPC, the features and
+and differences of TeX-FPC.
 
 TRIP TRAP
 ---------
-Both tests might not be passed by TeX-FPC: TeX and METAFONT trim
-trailing spaces from input lines for compatibility with IBM's
-punched cards. TeX-FPC's programs don't.
+Both tests are passed by TeX-FPC. See the trip and the trap directories..
 
-
-Installing TeX-FPC:
-===================
+Hints to build and install TeX-FPC from Knuth's sources.
+========================================================
+Create the master directories if you haven't done so allready.
+Create links to the master directories in tex-fpc:
+	mk_TeX_dir
+	mk_MF_dir
 
 Get Knuth's source files:
 ------------------------
-Make a stage directory, say tex-fpc, which mirrors Knuth's distribution
-from
+Get some directories of Knuth's distribution from
+	tug.org/tex-archive/systems/knuth/dist.zip
+Unpack dist.zip in the parent directory of tex-fpc and move the files from
+Knuth's distribution to tex-fpc.
+  $ mv dist/* tex-fpc
 
-	ftp://ftp.dante.de/pub/tex/systems/knuth/dist.zip
+This directory, i.e. tex-fpc will be our stage directory, that is
+all compiling etc. will be done in tex-fpc and it's subdirectories.
 
-This gives you the WEB files, manuals, macros and some .mf files.
-At least you need the directories lib, tex, mfware, mf and web.
+Install the files from cm to MFinputs:
+	mv cm/* MFinputs
 
-You need another set of source files, namely the METAFONT source
-files (.mf) for Knuth's font Computer Modern.
-
-Copy the .mf files from
-	ftp://ftp.dante.de/pub/tex/fonts/cm/mf/
-to MFinputs.
-
-And Copy the .mf files from the lib directory to MFinputs.
+And copy the .mf files from the lib directory to MFinputs.
         cp -p lib/*.mf MFinputs
 
-I prefer the DANTE server, because that server preserves modification
-times. This is not true with other CTAN mirrors.
+All path names are given relative to tex-fpc.
 
 Building from WEB sources, (xxx.web and xxx.ch --> xxx, xxx.pool)
 ----------------------------------------------------------------
 The general procedure to build a binary xxx from its WEB files is:
 Move xxx.ch to the directory that contains xxx.web, apply tangle
-to xxx.web and xxx.ch to generate xxx.p and xxx.pool, and compile the
-Pascal source with gpc. The command line
+to xxx.web and xxx.ch to generate xxx.p, and compile the
+Pascal source with fpc. The command line
    tgl xxx.web xxx.ch
 will do all that. It produces xxx that you need to move to your binary
-directory.
+directory. Note tgl will not create xxx.pool, since this is only needed
+by the ini-versions that are to be built by itgl.
+
+METAFONT and TEX come in two versions: An initialization version
+(initex, inimf) and a production version (tex, mf). To build the
+initialization version, edit the change file to deactivate the change
+blocks marked by "ini", and use itgl. To build the production version,
+activate the change blocks marked by "ini" and use tgl.
+
+A change block is active, if each of the web commands @x, @y and
+@z are at the start of their lines, inactive if none of the web
+commands are at the start of their lines.
+See webman.tex, for a short description of change files (look for @x).
 
 Step by step procedure to bootstrap TeX-FPC
 -------------------------------------------
-Install Free Pascal Compiler from www.freepascal.org.
+Install the Free Pascal Compiler (3.0.0+)
+	https://freepascal.org/download.html 
 
-Create the master directories (see above)
+Create the master directories (see above).
 
-copy the shell scripts from the tex-fpc/shell to your binary direcory.
+Copy the shell scripts from tex-fpc/shell to your binary directory.
 
 
-0. Make tangle                                       tangle.p --> tangle
-------------------------------------------------------------------------
+0. Compile tangle                                       tangle.p --> tangle
+----------------------------------------------------------------------------
 Compile tangle.p (fpc tangle.p) and move tangle to your
 binary directory.
 
-1. Make inimf and initex  mf.web,  mf.ch --> inimf, inimf.p, MFbases/mf.pool
-                         tex.web, tex.ch --> initex,initex.p TeXformats/tex.pool
-Make sure, mf.ch and tex.ch are prepared to produce ini versions of
-tex and mf.
-------------------------------------------------------------------------
-Build the ini-programs and save them as initex, resp. inimf.
-Move tex.pool to TeXformats and mf.pool to MFbases, use itgl instead
-of tgl to keep inimf.p and initex.p.
+1. Make inimf and initex
+------------------------
+    mf.web,  mf.ch --> inimf, inimf.p, mf.pool
+    ------------------------------------------
+
+    tex.web, tex.ch --> initex,initex.p tex.pool
+    --------------------------------------------
+
+Build the ini-programs using itgl and save them as initex, resp. inimf in your
+bin directory.  Save tex.pool in  TeXformats and mf.pool in MFbases.
 
 2. Make plain.base                   lib/plain.mf --> MFbases/plain.base
 ------------------------------------------------------------------------
-Go to the directory tex-fpc/mf and use inimf to create plain.base.
+Go to tex-fpc/mf and use inimf to create plain.base.
 The file local.mf contains mode definitions for my HP LaserJet 1320
-printer. Adapt local.mf to your printer and then type
+printer. Adapt local.mf to your printer.
 	inimf ../lib/plain input ../MFT/local dump
 
 Move plain.base to MFbases.
 
 3. Make mf 					    mf.web, mf.ch --> mf
 ------------------------------------------------------------------------
-Edit mf.ch and look for the string @x inimf that introduces a change
-block. This change block is commented out, since it is shifted
-right.  Shift left this block to uncomment it. This way mf.ch is
-changed to build a production version.
+goto mf and use  ../ch.ch/mkprod mf to activate the inimf-change
+block in mf.ch, build mf with tgl, save mf in your bin directory.
 
-4. Make gftopk                          gftopk.web, gftopk.ch --> gftopk
-------------------------------------------------------------------------
-Build gftopk in the mfware directory. You need gftopk to install
-packed font files (.nnnpk) in the next step.
 
-5. Install fonts:         MFinputs/*.mf --> TeXfonts/*.tfm, PKfonts/*.pk
+4. Install TFM-fonts:                   MFinputs/*.mf --> TeXfonts/*.tfm
 ------------------------------------------------------------------------
-Prepare tex-fpc to run both METAFONT (mk_MF_dir) and TeX (mk_TeX_dir)
-and run the shell script MFT/plainfonts from there.
+Run the shell script MFT/plainfonts.
 Check the file trouble that might contain commands that failed.
 
-6. Make plain.fmt                 lib/plain.tex --> TeXformats/plain.fmt
+5. Make plain.fmt                 lib/plain.tex --> TeXformats/plain.fmt
 ------------------------------------------------------------------------
-Copy lib/hyphen.tex to TeXinputs and go to the directory tex-fpc/tex
-to build plain.fmt.
+Copy lib/hyphen.tex to TeXinputs and go to tex to build plain.fmt.
 This command line will do 
     initex ../lib/plain \\dump # one backslash is consumend by sh!
 Move plain.fmt to TeXformats.
 
-7. Finally build tex                             tex.web, tex.ch --> tex
+6. build tex                                     tex.web, tex.ch --> tex
 ------------------------------------------------------------------------
-Change tex.ch for production, and build it with tgl.
+Use ../ch.ch/mkprod to activate the initex-change block in tex.ch
+and build tex with tgl.
 
-Enjoy,
-Wolfgang Helbig, Programmierer
+Step 6 completes the minimal installation of TeX-FPC, which enables
+you to study, change, build, and test the six programs tangle,
+weave, inimf, mf, initex, and tex. Run them to typeset your book,
+create your font, and last but not least to try literate programming
+and write your own web programs.
+
+Happy weaving and typesetting,
+Wolfgang Helbig,
 
 Comments welcome: helbig@mailbox.org
-
-TeX is a trademark of the American Mathematical Society.
-METAFONT is a trademark of Addison Wesley Publishing Company.

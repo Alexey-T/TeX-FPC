@@ -1,0 +1,17 @@
+# undo some changes made for the trap test
+# deactivate trap blocks
+ed mf.ch <<'END'
+g/^@x trap/.,/^@z/s/^/	/\
+?^	@x?,.p
+w
+q
+END
+# activate part blocks
+test $? = 0 \
+&& ed mf.ch <<'END'
+g/^	@x part/.,/^	@z/s/^	//\
+?^@x?,.p
+w
+q
+END
+test $? = 0 || (echo $0 failed ; exit 1)

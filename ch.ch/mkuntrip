@@ -1,0 +1,8 @@
+# undo the changes made for trip
+ed tex.ch <<'END'
+g/^@x trip/.,/^@z/s/^/	/\
+?^	@x?,.p
+w
+q
+END
+test $? = 0 || (echo $0 failed; exit 1)

@@ -1,0 +1,10 @@
+1c1
+< This is TeX, Version 3.141592653 (INITEX)  4 JUL 1776 12:00
+---
+> This is TeX-FPC, 3rd ed. (INITEX)  6 FEB 2021 15:01
+450,451c450,451
+<  (preloaded format=trip 1776.7.4)
+< 1326 strings of total length 23633
+---
+>  (preloaded format=trip 2021.2.6)
+> 1327 strings of total length 23646

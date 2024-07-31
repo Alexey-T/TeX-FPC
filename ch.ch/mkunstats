@@ -1,0 +1,12 @@
+# deactivate stats blocks in tex.ch or in mf.ch to turn statistic off.
+case $# in
+1) tm=$1 ;;
+*) tm=tex ;;
+esac
+ed $tm.ch <<'END'
+g/^@x stat/.,/^@z/s/^/	/\
+?^	@x?,.p
+w
+q
+END
+test $? = 0 || (echo $0 $1 failed ; exit 1)

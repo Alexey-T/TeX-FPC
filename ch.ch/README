@@ -1,0 +1,19 @@
+These shell scripts invoke ed on .ch files to change change files.
+
+The first line of a change block must start with @x <theme>. All
+lines of a deactivated change block must start with a tab, i.e.
+"shifted right."
+
+Under these preconditions, e.g. the script mkinitex deactivates the block
+marked by @x initex and the script mkprodtex activates the same
+block.
+
+The mk* scripts print the changed lines.
+
+Some ch.ch files, like mkchatty, take one optional parameter.
+"mkchatty" or "mkchatty tex" change tex.ch and "mkchatty mf" changes mf.ch.
+
+These commands are idempotent. Applying twice a change script has
+the same effect as applying it once.
+
+Cf. section 11 of webman.tex for the format of change files.

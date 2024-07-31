@@ -1,0 +1,12 @@
+# deactivate debug block to turn debugging off.
+case $# in
+1) tm=$1 ;;
+*) tm=tex ;;
+esac
+ed $tm.ch <<'END'
+g/^@x debug/.,/^@z/s/^/	/\
+?^	@x?,.p
+w
+q
+END
+test $? = 0 || (echo $0 $1 failed ; exit 1)

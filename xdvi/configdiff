@@ -1,0 +1,12 @@
+1010c1010
+<       *.c | *.o | *.obj | *.dSYM) ;;
+---
+>       *.c | *.o | *.obj) ;;
+1159c1159
+<     for ac_extension in a so sl dylib; do
+---
+>     for ac_extension in a so sl; do
+1318c1318
+<   for ac_extension in a so sl dylib; do
+---
+>   for ac_extension in a so sl; do

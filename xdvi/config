@@ -1,15 +1,12 @@
 # configure script for xdvi for TeX-FPC and Mac OS X
-# change the prefix and the base resolution in BDPI.
-# The resolution must agree with the one in the METAFONT mode localfont!
-# Do not specify a mfmode here! It will break automatic font generation.
 CPPFLAGS='-DBDPI=600 -DMAKEPK=4' ./configure \
 --mandir=/users/helbig/man \
 --bindir=/users/helbig/bin \
 --with-default-texmf-path=DVIPSconf \
---enable-ps-gs \
+--disable-freetype \
 --enable-old-make-pk \
 --enable-extra-app-defaults=DVIPSconf \
 --with-default-font-path=PKfonts \
 --with-default-header-path=DVIPSconf \
 --with-default-fig-path=.:TeXinputs \
---without-mfmode
+--without-mfmode 

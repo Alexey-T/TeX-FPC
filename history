@@ -1,0 +1,109 @@
+2008-07-21: Change files for tex and friends, shell scripts to build
+            a Pascal only implementation of TeX.
+
+            TeX-bugs fixed:
+	    (1) TeX warns you about an underful box if the last line
+	    of Paragraph contains discardables only.  I discovered
+	    this bug while trying to prove the line breaking code.
+	    I reported to Mrs. Beeton. But the checkers didn't seem
+	    to understand my request. They replied: An empty box
+            triggers the underful box warning as designed. 
+            But this is not, what I questioned. But I do question,
+	    that TeX leaves an empty box as the last line of a
+	    paragraph. At least it should contain the \parfilskip
+	    glue. Well, I fixed it by protecting \parfilskip from
+	    being discarded. By the way, this is one of those bugs
+	    you won't find by testing.
+
+	    (2) TeX flushes now and then extension and area of input
+	    file names.  Igor Liferenko reported this bug on
+	    2020-10-29, more than twelve years later.
+
+2008-09-07: MetaPost, dvips, xdvi, polytonic greek fonts added.
+	    Less than two month suffice for TeX-GPC to grow autonomous:
+	    To typeset, preview and print technical papers containing
+	    figures is all covered by the components of TeX-GPC.
+
+	    Btw., this turned out to be important for me. The latest
+	    Mac OS version running on my 2009 imac is OS X 11.
+	    MacTeX 2020 runs on 10.15 or newer.
+
+	    TeX-GPC does buffered write for the dvi file. This
+	    triples the speed.  To process tex.tex web2c needed
+	    7.54s, TeX-FPC 11.40s. Speed is important for the
+	    preview-edit cycle.
+
+2010-03-16: The 2nd edition builds and runs on Mac OS 10.2, it includes
+	    a directory "tech" that shows how to construct tex with
+	    the German hyphenation table and the package german
+	    style from Bernd Raichle.  Now TeX-GPC contains everything
+	    you need to typeset, preview, and print German books,
+	    as I did! (Helbig: Analysis 0, Ein logischer Einstieg
+	    in die Analysis). When Germans write the word they hear
+	    when Knuth says "TeX" they write "tech".
+
+	    Now TeX-GPC is compatible to newer versions of GPC as
+	    suggested by Martin Monperrus. Louis Rivera kindly
+	    reported some problems relating to different versions
+	    of the compiler.
+
+	    Joachim Kuebart reported: If the first input line
+	    contains spaces only, TeX-GPC might loop. In fact TeX-GPC
+	    will not loop since it accidently exploits the fact,
+	    that the memory is zeroed out when initialized by  Unix.
+	    But nevertheless it is a bug.
+
+2010-05-26: 2nd edition, first fix: tangle.p forgotten.
+	    Aside from tangle.p the same as above.
+
+2014-06-29: 3rd edition, based on Knuth's dististribution  from
+	    Jan. 2014.  The change files of this edition are to be
+            applied to  TeX version 3.14159265, MF version 2.7182818.
+
+2015-09-30: Update to macOS 10.11 broke GPC and therefore TeX-GPC
+            as well.  Helpless, sad, hoping for a revival of GPC.
+
+2019-02-22: 1st edition of TeX-FPC. Date fixed at 1776-07-14.
+
+2019-03-04: fixing three bugs of 1st. edition, all reported by Joachim.
+	    The shell script tgl tried to launch good old GPC.  An
+	    extra space in tex.ch corrupted the change file.  In
+	    tex.ch a '\marke G' waited to be replaced by '\marke X'.
+
+2020-11-25: 2nd edition. All features recreated! Finally arrived the state
+	    of 2008-09-07. Exhausted but happy!
+
+	    Igor Liferenko reported another bug in TeX: An extra space
+	    is printed in the log file and the last line is not terminated
+	    when the user switched to \batchmode during error recovery.
+	    TeX-FPC fixes both noisances.
+
+	    Realizing that TeX-FPC is the only pure Pascal distribution,
+	    I decided that my personal preferences are not worthwhile
+	    to clutter up TeX-FPC, since I can reinstall them
+	    whenever I want them. My wishes are: Don't ignore trailing
+	    spaces of input lines, don't ignore leading spaces of
+	    the first input line. Don't print extra empty lines on
+	    the terminal, when entering a file interactively.  These
+	    regressions leads us back to IBM's fixed length records
+	    and punching cards, when the user could not control the
+	    length of a line.
+
+future: Bugs that remain to be fixed:
+	    This one-liner loops:
+	         \def\par{\endgroup\par} \def\a#1{#1} \a\par
+
+            Whatever you enter during error recovery, you cannot convince
+	    TeX to forgive your faux pas and continue processing the rest
+	    of the file.
+
+2021-02:    3rd edition. Will Senn and Dave Jarvis pointed out some ambiguities
+            in the README file. I'll took their comments and questions to
+            improve the wordings in the README file and some of TeX's error
+            messages.
+
+            The minimal installation does not care for the .pk fonts. They will
+            be created on demand by the dvi drivers. (dvips and xdvi)
+
+2021-04:    4th edition. Joachim found some typos in README and helped to
+	    fix the WEB macros.

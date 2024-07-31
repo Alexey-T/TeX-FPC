@@ -1,12 +1,12 @@
-How to install xdvi for TeX-GPC:
+How to install xdvi for TeX-FPC:
 
 Get the source from
-   https://math.berkeley.edu/~vojta/xdvi/xdvi-22.85.tar.gz
-It unpacks into xdvi-22.85.
+   https://math.berkeley.edu/~vojta/xdvi/xdvi-22.86.tar.gz
+It unpacks into xdvi-22.86.
 
-Edit config reflecting your binary directory, your man directory
+Edit the file config reflecting your binary directory, your man directory
 (i. e. a directory you have write permissions and has a subdirectory
-man1) and the resolution of your printer and then switch to xdvi-22.84
+man1) and the resolution of your printer and then switch to xdvi-22.86
 and run
 ../config && make clean && make && make install
 
@@ -14,19 +14,37 @@ Unfortunately this neither works for NetBSD nor for Mac OS X.
 For NetBSD use this:
 ../config && make clean && make && ../load && make install
 
-For Mac OS X use this:
-Instead replace the configure script in xdvi-22.84 with macconfigure,
-and replace xdvi.h with macxdvi.h.
+For Mac OS X it gets more involved:
+gcc -g creates files with the suffix .dSYM. The configure script
+then takes .dSYM as the suffix of executables, and thus breaks.
 
-The xdvi is configured soley by DVIPSconf/XDvi, move XDvi to DVIPSconf.
+The libraries in Mac OS X have the suffix .dynlib which breaks the
+configure script.
+
+See the file configdiff for the changes.
+
+A third error is to be fixed in xdvi.h, where symbol _XOPEN_SOURCE
+is defined.  Remove the line, since the definition of _XOPEN_SOURCE
+causes NSIG to be not defined, which breaks signal.h.
+
+To fix the configure file either apply the changes in configdiff
+to it or replace it by the file macconfigure.
+
+Ignore the install-data error from make install.
+
+The file $HOME/Xdvi will be read by xdvi.
+An example configuration file is Xdvi. 
+
+Install the directory mfware from Knuth's distribution in tex-fpc.
+Build and install mfware/gftopk and cp dvips/MakeTeXPK to your bin
+directory. xdvi uses these programs to create bitmap pixel fonts~.nnnpk
+on demand.
 
 You might want to change /etc/man.conf to include your private man pages.
 I boldly replaced the line
 _default        /usr/{share,X11R6,pkg,local}/man/
 to
 _default        /usr/{helbig,share,X11R6,pkg,local}/man/
-
-For whatever reason, I couldn't make configure work on Mac OS X. Please help!
 
 enjoy
 Wolfgang 

@@ -1,18 +1,21 @@
 This directory contains files that help installing an ancient Greek
-font in TeX-GPC. The font includes a full set of diacritical marks,
+font in TeX-FPC. The font includes a full set of diacritical marks,
 the preclassic letters digamma, quoppa and sampi, and the lunatic
 variant of sigma.
 
 The font was originally cut by Firmin Didot(*1764, +1836), put into
 METAFONT files by Silvio Levy in 1987 and improved by Pierre A. MacKay,
-the author of Ibycus4. Here I used version 4.5 as of
-2004-10-27.
+the author of Ibycus4. Here I used version 4.5 as of 2004-10-27.
 
 Preparation:
 ------------
-Get the packages ibygrk and levy from CTAN:fonts/greek and copy
-files from levy and ibygrk directories into this directory, with
-the shellscripts getlevy and getiby.
+Get the packages ibygrk and levy from CTAN:fonts/greek and unzip them
+in the MFT directory, so ibygrk and levy are siblings to iby.
+ftp ftp://tug.org/tex-archive/fonts/greek/levy.zip
+ftp ftp://tug.org/tex-archive/fonts/greek/ibygrk.zip
+
+Copy files from the levy and ibygrk directories into this directory,
+with the shell scripts getlevy and getiby.
 
 Link METAFONT's and TeX's master directories to this directory, so
 you can run mf and tex from here. Make sure MFinputs contains
@@ -82,6 +85,15 @@ guillemets	<< >>
 
 Look at test.tex and sappho.tex for examples.
 
+If you get messages like that
+    Font \ninegrk=fibr84 at 9.0pt not loaded: Not enough room left.
+you want to enlarge TeX's memory.
+Compile TeX with statistics turned on, set \tracingstats=1
+and observe the statistics at the end. Then you might change the
+constant in tex.p, compile with
+   fpc -Fasysutils,baseunix,unix tex.p
+and try with the bigger tex.
+
 Installing the Type 1 fonts in teTeX3.0:
 ----------------------------------------
 List the search directory with `kpsewhich -show-path=.pfb'
@@ -95,4 +107,6 @@ Finally I added the command line option `-u +iby' to dvips
 in the dvipdf script.
 
 Aug. 2008
+-
+Nov. 2020
 Wolfgang Helbig

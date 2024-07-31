@@ -1,0 +1,56 @@
+1. for a=4095, b=4096, of subtype [0..65535] (halfword in TeX) fpc
+cannot compile a+b-8192: Can't determine which overloaded function
+to call
+
+2. To fix, I changed the expression to abs(int(a+b-8192)).  But
+instead of -1 it evaluates to 1.8e+19 With this bug, the first
+edition of TeX-FPC was distributed. Sorry.  In preparation of the
+second edition, I turned on overflow checking. And, this deteced
+the error in mf. Which I fixed then.
+
+3. The program
+{$MODE ISO}
+program p (output);
+var f: file of char;
+begin
+    rewrite(f);
+    f^ := 'a';
+    put(f);
+    reset(f);
+    while not eof(f) do
+    begin
+	writeln(f^); get(f)
+    end;
+end.
+prints nothing when compiled with 3.0.4 and produces a runtime error
+when compiled with 3.2.0:
+a
+Runtime error 100 at $000000010124C479
+  $000000010124C479
+
+3.0.4 eof is true, if the file position is set at the last item of
+the file.
+
+3.2.0 eof is true, if the file position is set past the end of file,
+which complies to Pascal.
+
+4. 3.2.0 reports a run time error 100, which means disk error, when
+get is called at the last item, which does not comply to Pascal.
+
+BTW. I detected no errors of the GNU Pascal Compiler.
+
+5. Text files will be flushed automatically.
+But only, if their name occurs in the program header.
+
+6. Files will be assigned to external files from the command line
+if their name occurs in the program header.
+But only for text files.
+
+The last two half baked features let FPC compile the compiler and
+interpreter of the Pascal-p5 system, which claims to be ISO-Pascal,
+since pcom, pint use only text files whose names appear in the
+program header.
+
+TeX-FPC does not depend on one of the last two features, i. e.
+TeX-FPC's programs flush (or close) text-files always and assign
+external file names always, since it is simply easier to code.

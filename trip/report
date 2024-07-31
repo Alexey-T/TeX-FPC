@@ -1,0 +1,71 @@
+This directory suggests how to perform the trip test as described in the
+tripman file.
+
+Step 0.
+mv the trip directory to the tex directory, and cd to the trip directory.
+Copy the file trip.tex from the tex directory to the trip directory:
+cp ../trip.tex .
+
+Step 1. make and test trip.tfm
+$ pltotf ../trip.pl trip.tfm
+This is PLtoTF-FPC, 2nd ed.
+'000 '055 '057 '061 '062 '063 '064 '065 
+'066 '067 '101 '102 '103 '115 '141 '142 
+'160 '161 '162 '163 '164 '165 '202.
+$ tftopl trip.tfm tmp.pl
+This is TFtoPL-FPC, 2nd ed.
+'000 '055 '057 '061 '062 '063 '064 '065 
+'066 '067 '101 '102 '103 '115 '141 '142 
+'160 '161 '162 '163 '164 '165 '202.
+$ diff tmp.pl ../trip.pl
+no news are good news!
+
+Step 2 prepare tex.ch with the handy mktrip script.
+$ cd ..
+$ mktrip
+37493
+...
+$ itgl tex.web tex.ch
+This is TANGLE-FPC, 3rd ed.
+...
+
+Save initex to you bin directory:
+mv initex ~/bin/
+
+$ cd -
+
+Step 3
+$ initex
+This is TeX-FPC, 3rd ed. (INITEX)
+**
+Please type the name of your input file or Control-D.
+**\input trip
+...
+
+Save trip.log:
+$ mv trip.log tripin.log
+
+Report the differences:
+$ diff ../tripin.log tripin.log  >diff_tripin.log
+Step 4
+$ initex
+This is TeX-FPC, 3rd ed. (INITEX)
+** &trip  trip
+! Bad number (-7).
+...
+Copy the screen output to trip.fot.
+Report the differences:
+$ diff ../trip.log trip.log  >diff_trip.log
+$ diff ../trip.fot trip.fot  >diff_trip.fot
+Note: The files diff_.. are distributed in this directory.
+Note: I copied the terminal window to create the trip.fot. It contains
+both what I typed and what tex printed.
+
+Step 6
+The file options relieves you from typing the options manually.
+
+$ dvitype trip.dvi trip.typ <options
+This is DVItype-FPC, 3rd ed.
+Output level (default=4, ? for help): Starting page (default=*): Maximum number of pages (default=1000000): Assumed device resolution in pixels per inch (default=300/1): New magnification (default=0 to keep the old one): $ 
+The file diff_trip.typ contains the differences of my run to Knuth's.
+$ diff ../trip.typ trip.typ >diff_trip.typ

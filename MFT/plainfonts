@@ -1,4 +1,4 @@
-# This script builds and installs .tfm and .pk fonts for plain.tex.
+# create and install .tfm files for plain.tex.
 rm -f trouble # clean list of trouble makeing fonts
 mkfont cmr10 # roman text
 mkfont cmr9
@@ -46,7 +46,4 @@ mkfont cmbsy10 # bold math symbols
 mkfont cmcsc10 # caps and small caps
 mkfont cmssbx10 # sans serif bold extended
 mkfont cmdunh10 # Dunhill style
-mkpkfont cmr7 magstep4 # for titles
-mkpkfont cmtt10 magstep2
-mkpkfont cmssbx10 magstep2
 mkfont manfnt # METAFONT logo and dragon curve and special symbols

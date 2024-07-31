@@ -1,0 +1,12 @@
+# deactivate initex block to make initex or inimf to make inimf
+case $# in
+1) tm=$1 ;;
+*) tm=tex ;;
+esac
+ed $tm.ch <<'END'
+g/^@x ini/.,/^@z/s/^/	/\
+?^	@x?,.p
+w
+q
+END
+test $? = 0 || (echo $0 failed; exit 1)

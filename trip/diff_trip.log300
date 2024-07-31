@@ -1,0 +1,42 @@
+1,3c1,3
+< This is TeX, Version 3.14159265 (preloaded format=trip 2014.1.7)  7 JAN 2014 09:59
+< ** &trip  trip
+< (trip.tex ##
+---
+> This is TeX-FPC, 2nd ed. (preloaded format=trip 2020.11.14)  14 NOV 2020 20:12
+> ** &trip  ../trip
+> (../trip.tex ##
+870c870
+< \vbox(924.23029+1.0)x0.0, glue set 3.19875 []}
+---
+> \vbox(924.23029+1.0)x0.0, glue set 3.19873 []}
+883c883
+< \vbox(924.23029+1.0)x0.0, glue set 3.19875
+---
+> \vbox(924.23029+1.0)x0.0, glue set 3.19873
+3488c3488
+< .............\hbox(14.00002+2.0)x8.19003, glue set 1.09502fil
+---
+> .............\hbox(14.00002+2.0)x8.19003, glue set 1.095fil
+3512c3512
+< .................\hbox(16.0+4.00002)x6.00002, glue set 0.00002fil
+---
+> .................\hbox(16.0+4.00002)x6.00002, glue set 0.0fil
+7133c7133
+< ..|hbox(0.0+0.0)x0.99, glue set 0.49501fil
+---
+> ..|hbox(0.0+0.0)x0.99, glue set 0.495fil
+7296,7297c7296,7297
+<  47 strings out of 1674
+<  253 string characters out of 8354
+---
+>  50 strings out of 1675
+>  279 string characters out of 8416
+7302c7302
+<  7i,7n,9p,113b,38s stack positions out of 200i,40n,60p,500b,600s
+---
+>  7i,7n,9p,116b,38s stack positions out of 200i,40n,60p,500b,600s
+7304c7304
+< Output written on trip.dvi (16 pages, 2920 bytes).
+---
+> Output written on trip.dvi (16 pages, 2924 bytes).

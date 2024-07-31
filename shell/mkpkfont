@@ -1,4 +1,5 @@
-# install pk-file from mf-file for TeX-GPC
+# install pk-file from mf-file for TeX-FPC
+# this script is used by xdvi
 #
 # xdvi expects the path name of the generated .pk file in the first
 # line of stdout, so redirect mf's stdout to stderr.

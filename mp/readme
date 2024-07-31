@@ -1,0 +1,204 @@
+Aug. 2008 - Nov. 2020
+This is the stage directory to build and install John Hobby's
+METAPOST for FPC.  METAPOST produces pictures as PostScript files
+that are to be included by dvips in its output.
+
+METAPOST's file formats and their documentation:
+------------------------------------------------
+.mp	METAPOST source,
+	see "A User's manual for MetaPost", AT&T Bell Laboratories
+        Computing Science Technical Report 162, 1992
+.mpx	METAPOST source, auxiliary file, needed if a .mp file contains
+        TeX-programs.
+.mem	METAPOST format file (plain.mp)
+.c	C source (Kernighan/Ritchie The C Programming Language)
+.ps	Adobe PostScript 
+.n    Where n an integer, a PostScript file for picture n, to be included
+      by dvips.
+
+
+builtin file names:
+------------------
+MPlib/mp.pool		string pool for mp, (in inimp)
+MPlib/plain.mem  	base file for Plain METAFONT, (in mf)
+
+METAPOST's processors:
+----------------------
+          inimp
+ plain.mp -------> MPlib/plain.mem
+
+
+          mptotex
+.mp       -------> .tex (the .tex file contains stuff to be included
+			in the figure, like labels)
+
+            tex
+.tex      -------> .dvi (the dvi contains the output of the tex program.)
+
+          dvitomp
+.dvi     --------> .mpx  (mp will \read the .mpx-file)
+
+             mp
+.mp       -------> .n 
+
+            mpx
+.mp      --------> .n (combines the last four steps)
+
+Use the shell script mpx instead of mp if and only if your .mp file
+contains TeX programs, i. e. if you have a TeX-program, that includes
+a figure, vis. an MP Program, that in turn contains TeX-programs.
+The result is a PS document defined by a TeX-file that includes a
+figure which in turn includes TeX-programs.
+
+The mpx file name is specified in the .mp file in a \read command.
+
+And finally:
+                      dvips
+.<n>, .dvi, .pk, .tfm ----> PostScript file/printer
+
+
+Get John Hobby's distribution
+-----------------------------
+The sources from CTAN depend on web2c,
+so I downloaded the originals from netlib:
+ftp ftp://mirrorservice.org/sites/ftp.netlib.org/research/metapost.tar.Z
+
+Be sure to unpack it in a different empty directory, since it clobbers
+the files all over the place.
+
+unpack it with uncompress and tar xf:
+	uncompress metapost.tar.Z
+	tar xf metapost.tar
+Copy at least mp.web, plain.mp, mptotex.c and dvitomp.web into this
+directory.
+
+Masterdirectories:
+------------------
+Create the master directories MPlib and MPinputs. Prepare a directory from
+where you want to run mp with the shell script mk_MP_dir.
+(Additionally to mk_TeX_dir)
+
+Building and installing:
+-----------------------
+Move a.out into your binary directory under the name at the
+right end of --->.
+
+1. mp.web, mp.ch ---> inimp
+Change mp.ch for initialization (see building inimf, initex) and itgl.
+Move mp.pool to MPlib.
+
+2. plain.mp ---> MPlib/plain.mem
+	inimp plain.mp dump
+mv plain.mem to MPlib
+
+3. mp.web, mp.ch ---> mp
+Change mp.ch for production (see building inimf, initex) and tgl.
+
+4. dvitomp.web, dvitomp.ch ---> dvitomp
+Just tgl and move a.out as dvitomp to your binary directory
+
+5. mptotex.c ---> mptotex
+apply patches to mptotex.c:
+ed mptotex.c <mptotex.ed
+cc mptotex.c, ignore the warning and move a.out to ...
+
+6. mpx ---> mpx (just move the shell script to your binary dir)
+
+Using MetaPost:
+--------------
+To include a MetaPost picture xxx.mp in your output, \input
+the TeX macro epsf.tex. At the place where you want to include your
+picture, write
+   \epsfbox{xxx.n}
+where xxx is the name of the picture and n is the argument given
+in the beginfig() command.
+
+fig.mp:
+beginfig(1)
+a=.7in; b=0.5in;
+z0=(0,0); z1=(a,0); z2=(0,b);
+z0=.5[z1,z3]=.5[z2,z4];
+draw z1..z2..z3..z4..cycle;
+drawarrow z0..z1;
+drawarrow z0..z2;
+label.top(btex $a$ etex, .5[z0, z1]);
+label.lft(btex $b$ etex, .5[z0, z2]);
+endfig
+end
+
+fig.mp contains two TeX programs, $a$ and $b$. So you need to call mpx instead
+of mp. This creates  fig.mpx:
+
+% Written by DVItoMP-FPC, 2nd ed.
+begingroup save _p,_r,_s,_n; picture _p; _p=nullpicture;
+string _n[];
+vardef _s(expr _t,_f,_m,_x,_y)=
+  addto _p also _t infont _f scaled _m shifted (_x,_y); enddef;
+_n0="cmmi10";
+_s("a",_n0,1.00000,0.0000,0.0000);
+setbounds _p to (0,-0.0000)--(5.2661,-0.0000)--
+ (5.2661,4.2895)--(0,4.2895)--cycle;
+_p endgroup
+mpxbreak
+begingroup save _p,_r,_s,_n; picture _p; _p=nullpicture;
+string _n[];
+vardef _s(expr _t,_f,_m,_x,_y)=
+  addto _p also _t infont _f scaled _m shifted (_x,_y); enddef;
+_n0="cmmi10";
+_s("b",_n0,1.00000,0.0000,0.0000);
+setbounds _p to (0,-0.0000)--(4.2756,-0.0000)--
+ (4.2756,6.9185)--(0,6.9185)--cycle;
+_p endgroup
+mpxbreak
+
+From fig.mp and fig.mpx METAPOST creates fig.1:
+
+%!PS
+%%BoundingBox: -51 -37 51 37 
+%%Creator: MetaPost
+%%CreationDate: 2020.10.29:1632
+%%Pages: 1
+%*Font: cmmi10 9.96265 9.96265 61:c
+%%EndProlog
+%%Page: 1 1
+ 0 0.5 dtransform truncate idtransform setlinewidth pop [] 0 setdash
+ 1 setlinejoin 10 setmiterlimit
+newpath 50.39978 0 moveto
+50.39978 23.04858 25.56044 36 0 36 curveto
+-25.56044 36 -50.39978 23.04858 -50.39978 0 curveto
+-50.39978 -23.04858 -25.56044 -36 0 -36 curveto
+25.56044 -36 50.39978 -23.04858 50.39978 0 curveto closepath stroke
+ 1 setlinecap
+newpath 0 0 moveto
+50.39978 0 lineto stroke
+newpath 46.70451 -1.53067 moveto
+50.39978 0 lineto
+46.70451 1.53067 lineto
+ closepath
+gsave fill grestore stroke
+ 0.5 0 dtransform exch truncate exch idtransform pop setlinewidth
+newpath 0 0 moveto
+0 36 lineto stroke
+ 0 0.5 dtransform truncate idtransform setlinewidth pop
+newpath 1.5308 32.3044 moveto
+0 36 lineto
+-1.5308 32.3044 lineto
+ closepath
+gsave fill grestore stroke
+22.56683 3 moveto
+(a) cmmi10 9.96265 fshow
+-7.2756 14.54074 moveto
+(b) cmmi10 9.96265 fshow
+showpage
+%%EOF
+
+Finally, the TeX file that includes a figure, fig.tex:
+
+\input epsf
+\epsfbox{fig.1}
+\bye
+
+Make fig.dvi with tex and fig.ps with dvips. Display the PS file on screen
+with ghostscript by "gs fig.ps". Other than TeX and friends the C-programs
+gs and mptotex don't guess the extension .ps or .mpx. gs just stops and
+mptotex catches a segmentation fault :-)

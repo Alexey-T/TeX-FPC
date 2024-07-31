@@ -1,0 +1,20 @@
+Here is how to three bugs of the WEB macros:
+1. Excessive memory usage: TeX cannot compile tex.tex with its
+   default memory size.
+2. Module number in the header don't agree with the the first module on
+   the page.
+3. Modules starts on new pages when they shouldn't.
+
+The report describes the bugs, explains them and their fixes.
+The script patch.sh creates the file nwebmac.tex file from the original
+file TeXinputs/webmac.tex. Install nwebmac.tex in TeXinputs as webmac.tex,
+thus overwriting the original.
+
+To test the new macros cd to the tex directory, set \let\maybe=\iffalse in
+tex.ch. Then weave:
+	wve tex.web tex.ch
+It should print more than 90 pages and less than 100. Than and only then
+bug 1 and bug 3 are fixed.
+
+Happy TeXing and WEAVEing.
+Wolfgang

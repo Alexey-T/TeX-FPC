@@ -1,0 +1,3 @@
+# create .tfm files for logmac
+mkfont cmsltt9
+mkfont logosl9

@@ -1,0 +1,11 @@
+! Options for xdvi for TeX-FPC:
+! Adapt pixelsPerInch to the resoulution of your printer.
+! mfMode is irrelavant in TeX-FPC (it is configured in mkpkfonts and mkfonts),
+! if set it breaks automatic .pk font making.
+xdvi*pixelsPerInch: 600
+xdvi*geometry: 760x715+0+0
+xdvi*background: white
+xdvi*paper: a4
+xdvi*shrinkFactor: 5
+xdvi*expert: 1
+xdvi*tickUnits: pt

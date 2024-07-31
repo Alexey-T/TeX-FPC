@@ -1,0 +1,10 @@
+# process .mp files that include TeX programs.
+case $# in
+1) f=`basename $1 .mp`;;
+*) echo Usage: $0 mp-file; exit 1;;
+esac
+mptotex $f.mp \
+|  tex \
+&& dvitomp texput.dvi $f.mpx \
+&& mp $f.mp \
+|| echo $0 failed!; exit 1

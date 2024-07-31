@@ -1,7 +1,14 @@
+# This script creates and installs .tfm files for the TeX/MF books.
 mkfont cmtex10
+mkfont cmssi9
 mkfont cminch
 mkfont cmssdc10 4
-mkpkfont cmr5 2
 mkfont cmman  # font used for miscellaneous Computer Modern variations
-		     # from ctan:/systems/knuth/local/mf/cmman.mf
+	      # from ctan:/systems/knuth/local/mf/cmman.mf
 mkfont random # from ctan:/systems/knuth/local/lib/random.mf
+mkfont cmss9
+mkfont cmbx12
+mkfont cmti12
+mkfont cmsl12
+mkfont cmmi12
+mkfont cmr12

@@ -1,0 +1,51 @@
+How to perform the trap test according to the trapman file.
+report of the trap test (cf. trapman)
+
+Step 0.
+Move the trap directory to the mf directory, and cd to the trap directory.
+This protects the original files like trap.log from being overwritten.
+Copy trap.mf to the trap directory.
+$ cp ../trap.mf .
+
+Step 1. Prepare a version of inimf. You might want to use the nifty
+script mktrap:
+$ cd ..
+$ mktrap
+...
+$ itgl mf.web mf.ch
+...
+$ mv inimf ~/bin
+$ cd -
+
+Step 2. run inimf
+$ inimf
+This is METAFONT-FPC, 3rd ed. (INIMF)
+**
+Please type the name of your input file or Control-D.
+**\input trap
+...
+mv trap.log trapin.log
+See diff_trapin.log for the differences of ../trapin.log and trapin.log
+
+Step 3. run inimf again
+$ inimf
+This is METAFONT-FPC, 3rd ed. (INIMF)
+** &trap  trap 
+...
+Copy the screen output to the file ../trap.fot
+
+See diff_trap.log for the differences of ../trap.log and trap.log
+See diff_trap.fot for the differences of ../trap.fot and trap.fot
+
+Step 5. Check the generic font file:
+$ gftype trap.72270gf trap.typ
+This is GFtype-FPC, 3rd ed.
+Mnemonic output? (default=no, ? for help): y
+Pixel output? (default=yes, ? for help): y
+See diff_trap.typ for the differences of ../trap.typ and trap.typ.
+
+Step 6.
+$ tftopl trap.tfm trap.pl
+...
+
+The file diff_trap.pl is empty!

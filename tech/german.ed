@@ -1,5 +1,6 @@
 219c
 \expandafter\def\csname grq \endcsname{%
 .
+g/[^%]$/s//&%/
 w
 q

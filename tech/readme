@@ -6,15 +6,15 @@ zu anderen Distributionen.  Sie enth"alt US-Englisch und Deutsch
 
 Installation:
 Die deutschen Trennmuster holen:
-ftp ftp://ftp.dante.de/pub/tex/macros/ec-plain/ghyph31.tex
+ftp ftp://tug.org/tex-archive/language/hyphenation/dehyph/dehypht.tex
 Und tech bauen:
 $ mktech
 Dies erzeugt das Programm tech. Am besten ins bin-Verzeichnis damit.
 
 Das Macropaket german.sty holen:
-ftp ftp://ftp.dante.de/pub/tex/language/german/german.sty
+ftp ftp://tug.org/tex-archive/language/german/german.sty
 
-Diese Datei mit dem Datum vom 13.04.199 enth"alt einen Fehler,
+Diese Datei mit dem Datum vom 13.04.1999 enth"alt einen Fehler,
 das \grq verschwindet. Mit
 ed <german.ed german.sty
 kann man diesen Fehler korrigieren.
